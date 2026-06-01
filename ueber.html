@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Über – Bandoleros MC</title>
+  <link rel="icon" href="img/logo.png">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* ── ÜBER PAGE ─────────────────────────────────── */
+    .ub-banner {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+
+    /* Standard member card */
+    .ub-card {
+      background: var(--bg-2);
+      border: 1px solid var(--border-m);
+      border-top: 3px solid var(--red);
+      padding: 2rem;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 1rem;
+      transition: transform 0.3s;
+    }
+
+    .ub-card::after {
+      content: '';
+      position: absolute;
+      inset: 6px;
+      border: 1px solid var(--red-d);
+      pointer-events: none;
+    }
+
+    .ub-card:hover { transform: translateY(-5px); }
+
+    /* Developer card — blue */
+    .ub-card.dev {
+      border-top-color: #5865F2;
+      box-shadow: 0 0 30px rgba(88,101,242,0.15);
+    }
+
+    .ub-card.dev::after {
+      border-color: rgba(88,101,242,0.12);
+    }
+
+    .ub-card.dev:hover {
+      box-shadow: 0 0 50px rgba(88,101,242,0.25);
+    }
+
+    .ub-avatar {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--red);
+      background: var(--bg-3);
+      box-shadow: 0 0 20px rgba(204,32,32,0.2);
+    }
+
+    .ub-card.dev .ub-avatar {
+      border-color: #5865F2;
+      box-shadow: 0 0 25px rgba(88,101,242,0.35);
+    }
+
+    .ub-badge {
+      font-family: 'Cinzel', serif;
+      font-size: 0.55rem;
+      letter-spacing: 3px;
+      padding: 0.2rem 0.7rem;
+      border: 1px solid var(--red);
+      color: var(--red);
+      text-transform: uppercase;
+    }
+
+    .ub-card.dev .ub-badge {
+      border-color: #5865F2;
+      color: #7289DA;
+    }
+
+    .ub-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 4px;
+      color: var(--text);
+      margin: 0;
+    }
+
+    .ub-discord-tag {
+      font-size: 0.72rem;
+      color: var(--text-m);
+      letter-spacing: 1px;
+    }
+
+    .ub-rank {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 3px;
+      color: var(--text-m);
+      text-transform: uppercase;
+    }
+
+    .ub-card.dev .ub-rank {
+      color: #7289DA;
+    }
+
+    /* Developer badges row */
+    .dev-badges {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 0.25rem;
+    }
+
+    .dev-pill {
+      background: rgba(88,101,242,0.15);
+      border: 1px solid rgba(88,101,242,0.3);
+      color: #7289DA;
+      font-size: 0.6rem;
+      font-family: 'Cinzel', serif;
+      letter-spacing: 2px;
+      padding: 0.2rem 0.6rem;
+      text-transform: uppercase;
+    }
+
+    .ub-divider {
+      width: 40px;
+      height: 1px;
+      background: var(--border-b);
+      margin: 0 auto;
+    }
+
+    .ub-card.dev .ub-divider {
+      background: rgba(88,101,242,0.3);
+    }
+
+    /* Section label */
+    .ub-section-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.62rem;
+      letter-spacing: 5px;
+      color: var(--text-m);
+      text-transform: uppercase;
+      text-align: center;
+      margin: 3rem 0 1rem;
+    }
+
+    .ub-section-label.blue { color: #5865F2; }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="index.html" class="nav-brand">
+      <img src="img/logo.png" alt="Bandoleros Logo">
+      <div>
+        <div class="nav-brand-name">Bandoleros</div>
+        <span class="nav-brand-sub">Tuxtla GTZ. &nbsp;·&nbsp; M.C.</span>
+      </div>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Menü">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Startseite</a></li>
+      <li><a href="mitglieder.html">Mitglieder</a></li>
+      <li><a href="regeln.html">Regeln</a></li>
+      <li><a href="bewerbung.html">Bewerbung</a></li>
+      <li><a href="ueber.html" class="active">Über</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-hero">
+    <h1>Über</h1>
+    <p>Das Chapter &amp; das Team hinter der Website</p>
+    <div class="ornament" style="margin-top:1.5rem">
+      <div class="ol"></div><span class="oi">✦</span><div class="or"></div>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+
+      <!-- 12er MITGLIEDER -->
+      <p class="sec-eyebrow">Rang 01 — Hangaround</p>
+      <h2 class="sec-title">Aktuelle Mitglieder</h2>
+
+      <div class="ub-banner">
+
+        <div class="ub-card">
+          <img class="ub-avatar" id="av-tuco" src="https://dcdn.dstn.to/avatars/917051907187548200" alt="Tuco" onerror="this.src='img/logo.png'">
+          <span class="ub-badge">Hangaround</span>
+          <h3 class="ub-name">Tuco Rothosen</h3>
+          <div class="ub-divider"></div>
+          <p class="ub-discord-tag" data-discord="917051907187548200">...</p>
+          <p class="ub-rank">Rang 01 &nbsp;·&nbsp; Einstieg</p>
+        </div>
+
+        <div class="ub-card">
+          <img class="ub-avatar" id="av-arne" src="https://dcdn.dstn.to/avatars/1270487578763853949" alt="Arne" onerror="this.src='img/logo.png'">
+          <span class="ub-badge">Hangaround</span>
+          <h3 class="ub-name">Arne Geier</h3>
+          <div class="ub-divider"></div>
+          <p class="ub-discord-tag" data-discord="1270487578763853949">...</p>
+          <p class="ub-rank">Rang 01 &nbsp;·&nbsp; Einstieg</p>
+        </div>
+
+      </div>
+
+      <!-- DEVELOPER KARTE -->
+      <p class="ub-section-label blue" style="margin-top:4rem">Website &amp; Developer</p>
+      <div class="ornament" style="margin-bottom:0">
+        <div class="ol" style="background:linear-gradient(to right,transparent,#5865F2)"></div>
+        <span class="oi" style="color:#5865F2">✦</span>
+        <div class="or" style="background:linear-gradient(to left,transparent,#5865F2)"></div>
+      </div>
+
+      <div style="display:flex; justify-content:center; margin-top:2rem;">
+        <div class="ub-card dev" style="max-width:320px; width:100%;">
+          <img class="ub-avatar" src="https://dcdn.dstn.to/avatars/1113333465455263745" alt="Nils" onerror="this.src='img/logo.png'">
+          <span class="ub-badge">Website Developer</span>
+          <h3 class="ub-name">Nils</h3>
+          <div class="ub-divider"></div>
+          <p class="ub-discord-tag" data-discord="1113333465455263745">...</p>
+          <div class="dev-badges">
+            <span class="dev-pill">⚙ Developer</span>
+            <span class="dev-pill">✦ Creator</span>
+          </div>
+          <p class="ub-rank">Website &amp; Design</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo"><img src="img/logo.png" alt="Bandoleros"></div>
+    <p class="footer-name">Bandoleros</p>
+    <p class="footer-sub">Tuxtla GTZ. M.C. &nbsp;·&nbsp; FiveM Roleplay &nbsp;·&nbsp; Alle Rechte vorbehalten</p>
+  </footer>
+
+  <script>
+    const t = document.getElementById('navToggle');
+    const l = document.getElementById('navLinks');
+    t.addEventListener('click', () => l.classList.toggle('open'));
+    l.querySelectorAll('a').forEach(a => a.addEventListener('click', () => l.classList.remove('open')));
+
+    document.querySelectorAll('[data-discord]').forEach(async el => {
+      const id = el.dataset.discord;
+      try {
+        const r = await fetch(`https://discord-lookup-api.vercel.app/v1/users/${id}`);
+        const d = await r.json();
+        const name = d.global_name || d.username;
+        if (name) el.textContent = name;
+        else el.textContent = '';
+      } catch {
+        el.textContent = '';
+      }
+    });
+  </script>
+</body>
+</html>
