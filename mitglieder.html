@@ -214,14 +214,14 @@
             <div class="rank-members-label">Aktive Mitglieder</div>
             <ul class="rank-member-list">
               <li class="dc-member">
-                <img class="dc-avatar" src="https://dcdn.dstn.to/avatars/1366803475954012200" alt="Avatar" onerror="this.src='img/logo.png'">
+                <img class="dc-avatar" data-avatar="1366803475954012200" src="" alt="Avatar">
                 <div class="dc-info">
                   <span class="dc-ingame">Dodo Rothosen</span>
                   <span class="dc-tag" data-discord="1366803475954012200">...</span>
                 </div>
               </li>
               <li class="dc-member">
-                <img class="dc-avatar" src="https://dcdn.dstn.to/avatars/1113333465455263745" alt="Avatar" onerror="this.src='img/logo.png'">
+                <img class="dc-avatar" data-avatar="1113333465455263745" src="" alt="Avatar">
                 <div class="dc-info">
                   <span class="dc-ingame">Nils</span>
                   <span class="dc-tag" data-discord="1113333465455263745">...</span>
@@ -245,14 +245,14 @@
             <div class="rank-members-label">Aktive Mitglieder</div>
             <ul class="rank-member-list">
               <li class="dc-member">
-                <img class="dc-avatar" src="https://dcdn.dstn.to/avatars/917051907187548200" alt="Avatar" onerror="this.src='img/logo.png'">
+                <img class="dc-avatar" data-avatar="917051907187548200" src="" alt="Avatar">
                 <div class="dc-info">
                   <span class="dc-ingame">Tuco Rothosen</span>
                   <span class="dc-tag" data-discord="917051907187548200">...</span>
                 </div>
               </li>
               <li class="dc-member">
-                <img class="dc-avatar" src="https://dcdn.dstn.to/avatars/1270487578763853949" alt="Avatar" onerror="this.src='img/logo.png'">
+                <img class="dc-avatar" data-avatar="1270487578763853949" src="" alt="Avatar">
                 <div class="dc-info">
                   <span class="dc-ingame">Arne Geier</span>
                   <span class="dc-tag" data-discord="1270487578763853949">...</span>
@@ -291,18 +291,43 @@
     t.addEventListener('click', () => l.classList.toggle('open'));
     l.querySelectorAll('a').forEach(a => a.addEventListener('click', () => l.classList.remove('open')));
 
-    // Discord username laden
-    document.querySelectorAll('[data-discord]').forEach(async el => {
-      const id = el.dataset.discord;
-      try {
-        const r = await fetch(`https://discord-lookup-api.vercel.app/v1/users/${id}`);
-        const d = await r.json();
-        const name = d.global_name || d.username;
-        el.textContent = name ? name : '';
-      } catch {
-        el.textContent = '';
-      }
-    });
+    // Discord Avatare + Namen laden
+    async function loadDiscordProfiles() {
+      const avatarEls  = document.querySelectorAll('[data-avatar]');
+      const discordEls = document.querySelectorAll('[data-discord]');
+
+      const ids = [...new Set([
+        ...[...avatarEls].map(e => e.dataset.avatar),
+        ...[...discordEls].map(e => e.dataset.discord)
+      ])];
+
+      const cache = {};
+      await Promise.all(ids.map(async id => {
+        try {
+          const r = await fetch(`https://discord-lookup-api.vercel.app/v1/users/${id}`);
+          if (r.ok) cache[id] = await r.json();
+        } catch {}
+      }));
+
+      avatarEls.forEach(el => {
+        const id = el.dataset.avatar;
+        const d  = cache[id];
+        if (d && d.avatar && d.avatar.link) {
+          el.src = d.avatar.link;
+        } else {
+          el.src = `https://dcdn.dstn.to/avatars/${id}`;
+        }
+        el.onerror = () => { el.src = 'img/logo.png'; };
+      });
+
+      discordEls.forEach(el => {
+        const d = cache[el.dataset.discord];
+        if (d) el.textContent = d.global_name || d.username || '';
+        else el.textContent = '';
+      });
+    }
+
+    loadDiscordProfiles();
   </script>
 </body>
 </html>

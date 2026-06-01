@@ -252,37 +252,47 @@
     t.addEventListener('click', () => l.classList.toggle('open'));
     l.querySelectorAll('a').forEach(a => a.addEventListener('click', () => l.classList.remove('open')));
 
-    // Lade Avatar + Name für jeden User
-    async function loadDiscord(id) {
-      try {
-        const r = await fetch(`https://discord-lookup-api.vercel.app/v1/users/${id}`);
-        return await r.json();
-      } catch { return null; }
+    async function loadDiscordProfiles() {
+      const avatarEls  = document.querySelectorAll('[data-avatar]');
+      const discordEls = document.querySelectorAll('[data-discord]');
+
+      // Alle eindeutigen IDs sammeln
+      const ids = [...new Set([
+        ...[...avatarEls].map(e => e.dataset.avatar),
+        ...[...discordEls].map(e => e.dataset.discord)
+      ])];
+
+      // Jeden User von der API laden
+      const cache = {};
+      await Promise.all(ids.map(async id => {
+        try {
+          const r = await fetch(`https://discord-lookup-api.vercel.app/v1/users/${id}`);
+          if (r.ok) cache[id] = await r.json();
+        } catch {}
+      }));
+
+      // Avatare setzen
+      avatarEls.forEach(el => {
+        const id = el.dataset.avatar;
+        const d  = cache[id];
+        if (d && d.avatar && d.avatar.link) {
+          el.src = d.avatar.link;
+        } else {
+          // Fallback: dcdn.dstn.to braucht nur die User-ID
+          el.src = `https://dcdn.dstn.to/avatars/${id}`;
+        }
+        el.onerror = () => { el.src = 'img/logo.png'; };
+      });
+
+      // Discord-Namen setzen
+      discordEls.forEach(el => {
+        const d = cache[el.dataset.discord];
+        if (d) el.textContent = d.global_name || d.username || '';
+        else el.textContent = '';
+      });
     }
 
-    const allIds = [...new Set([
-      ...document.querySelectorAll('[data-discord]'),
-      ...document.querySelectorAll('[data-avatar]')
-    ].map(el => el.dataset.discord || el.dataset.avatar))];
-
-    const cache = {};
-    for (const id of allIds) {
-      cache[id] = await loadDiscord(id);
-    }
-
-    document.querySelectorAll('[data-discord]').forEach(el => {
-      const d = cache[el.dataset.discord];
-      if (d) el.textContent = d.global_name || d.username || '';
-    });
-
-    document.querySelectorAll('[data-avatar]').forEach(el => {
-      const d = cache[el.dataset.avatar];
-      if (d && d.avatar && d.avatar.link) {
-        el.src = d.avatar.link;
-      } else {
-        el.src = 'img/logo.png';
-      }
-    });
+    loadDiscordProfiles();
   </script>
 </body>
 </html>
