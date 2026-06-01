@@ -542,6 +542,47 @@ body::before {
 
 .rank-desc { font-size: 0.84rem; color: var(--text-m); line-height: 1.8; }
 
+.rank-members {
+  margin-top: 1.2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-m);
+}
+
+.rank-members-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.55rem;
+  letter-spacing: 3px;
+  color: var(--text-m);
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+
+.rank-member-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.rank-member-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: 'Cinzel', serif;
+  font-size: 0.78rem;
+  letter-spacing: 1px;
+  color: var(--text-2);
+}
+
+.rank-member-list li::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--red);
+  flex-shrink: 0;
+}
+
 /* ─── RULE BLOCKS ────────────────────────────────── */
 .rules-grid {
   display: grid;
