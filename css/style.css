@@ -500,12 +500,13 @@ body::before {
 
 .rank-num {
   position: absolute;
-  top: 1.2rem; right: 1.8rem;
+  top: 1rem; right: 1.5rem;
   font-family: 'Bebas Neue', sans-serif;
-  font-size: 3.5rem;
-  color: rgba(204,32,32,0.05);
+  font-size: 4rem;
+  color: rgba(204,32,32,0.22);
   line-height: 1;
   pointer-events: none;
+  letter-spacing: 2px;
 }
 
 .rank-badge {
