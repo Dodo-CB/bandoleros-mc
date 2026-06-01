@@ -10,8 +10,8 @@
   --red-b:  #ee3535;
   --red-dk: #8a1515;
   --red-d:  rgba(204,32,32,0.12);
-  --chrome:   #b0b0b0;
-  --chrome-b: #d0d0d0;
+  --chrome:   #e04040;
+  --chrome-b: #ff5555;
   --text:   #f0ece4;
   --text-2: #c8beb8;
   --text-m: #6a5858;
@@ -187,27 +187,28 @@ body::before {
   width: 300px;
   height: 300px;
   border-radius: 50%;
-  border: 2px solid var(--red);
+  border: 3px solid var(--red);
   box-shadow:
     0 0 0 6px #080808,
-    0 0 0 8px rgba(204,32,32,0.3),
-    0 0 80px rgba(204,32,32,0.2);
+    0 0 0 9px rgba(204,32,32,0.35),
+    0 0 80px rgba(204,32,32,0.25);
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto 2.5rem;
+  overflow: hidden;
   animation: patchPulse 5s ease-in-out infinite alternate;
 }
 
 @keyframes patchPulse {
-  from { box-shadow: 0 0 0 6px #080808, 0 0 0 8px rgba(204,32,32,0.2), 0 0 50px rgba(204,32,32,0.12); }
-  to   { box-shadow: 0 0 0 6px #080808, 0 0 0 8px rgba(204,32,32,0.4), 0 0 100px rgba(204,32,32,0.28); }
+  from { box-shadow: 0 0 0 6px #080808, 0 0 0 9px rgba(204,32,32,0.22), 0 0 50px rgba(204,32,32,0.14); }
+  to   { box-shadow: 0 0 0 6px #080808, 0 0 0 9px rgba(204,32,32,0.45), 0 0 110px rgba(204,32,32,0.32); }
 }
 
 .hero-patch img {
-  width: 245px;
-  height: 245px;
-  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   animation: logoFloat 7s ease-in-out infinite;
 }
 
@@ -828,7 +829,6 @@ footer::before {
   .page-hero { padding: 6rem 1.5rem 3rem; }
 
   .hero-patch { width: 230px; height: 230px; }
-  .hero-patch img { width: 185px; height: 185px; }
 }
 
 @media (max-width: 480px) {
