@@ -188,14 +188,14 @@
   <section class="section">
     <div class="container">
 
-      <!-- 12er MITGLIEDER -->
-      <p class="sec-eyebrow">Rang 01 — Hangaround</p>
-      <h2 class="sec-title">Aktuelle Mitglieder</h2>
+      <!-- MITGLIEDER -->
+      <p class="sec-eyebrow">Bandoleros M.C. — Tuxtla GTZ.</p>
+      <h2 class="sec-title">Führung</h2>
 
       <div class="ub-banner">
 
         <div class="ub-card">
-          <img class="ub-avatar" id="av-tuco" src="https://dcdn.dstn.to/avatars/917051907187548200" alt="Tuco" onerror="this.src='img/logo.png'">
+          <img class="ub-avatar" data-avatar="917051907187548200" src="" alt="Tuco">
           <span class="ub-badge">Hangaround</span>
           <h3 class="ub-name">Tuco Rothosen</h3>
           <div class="ub-divider"></div>
@@ -204,7 +204,7 @@
         </div>
 
         <div class="ub-card">
-          <img class="ub-avatar" id="av-arne" src="https://dcdn.dstn.to/avatars/1270487578763853949" alt="Arne" onerror="this.src='img/logo.png'">
+          <img class="ub-avatar" data-avatar="1270487578763853949" src="" alt="Arne">
           <span class="ub-badge">Hangaround</span>
           <h3 class="ub-name">Arne Geier</h3>
           <div class="ub-divider"></div>
@@ -224,7 +224,7 @@
 
       <div style="display:flex; justify-content:center; margin-top:2rem;">
         <div class="ub-card dev" style="max-width:320px; width:100%;">
-          <img class="ub-avatar" src="https://dcdn.dstn.to/avatars/1113333465455263745" alt="Nils" onerror="this.src='img/logo.png'">
+          <img class="ub-avatar" data-avatar="1113333465455263745" src="" alt="Nils">
           <span class="ub-badge">Website Developer</span>
           <h3 class="ub-name">Nils</h3>
           <div class="ub-divider"></div>
@@ -252,16 +252,35 @@
     t.addEventListener('click', () => l.classList.toggle('open'));
     l.querySelectorAll('a').forEach(a => a.addEventListener('click', () => l.classList.remove('open')));
 
-    document.querySelectorAll('[data-discord]').forEach(async el => {
-      const id = el.dataset.discord;
+    // Lade Avatar + Name für jeden User
+    async function loadDiscord(id) {
       try {
         const r = await fetch(`https://discord-lookup-api.vercel.app/v1/users/${id}`);
-        const d = await r.json();
-        const name = d.global_name || d.username;
-        if (name) el.textContent = name;
-        else el.textContent = '';
-      } catch {
-        el.textContent = '';
+        return await r.json();
+      } catch { return null; }
+    }
+
+    const allIds = [...new Set([
+      ...document.querySelectorAll('[data-discord]'),
+      ...document.querySelectorAll('[data-avatar]')
+    ].map(el => el.dataset.discord || el.dataset.avatar))];
+
+    const cache = {};
+    for (const id of allIds) {
+      cache[id] = await loadDiscord(id);
+    }
+
+    document.querySelectorAll('[data-discord]').forEach(el => {
+      const d = cache[el.dataset.discord];
+      if (d) el.textContent = d.global_name || d.username || '';
+    });
+
+    document.querySelectorAll('[data-avatar]').forEach(el => {
+      const d = cache[el.dataset.avatar];
+      if (d && d.avatar && d.avatar.link) {
+        el.src = d.avatar.link;
+      } else {
+        el.src = 'img/logo.png';
       }
     });
   </script>
