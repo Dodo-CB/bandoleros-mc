@@ -583,6 +583,49 @@ body::before {
   flex-shrink: 0;
 }
 
+/* Discord member cards */
+.rank-member-list li.dc-member {
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.4rem 0;
+}
+
+.rank-member-list li.dc-member::before { display: none; }
+
+.dc-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 2px solid var(--border-b);
+  object-fit: cover;
+  background: var(--bg-3);
+  flex-shrink: 0;
+  transition: border-color 0.3s;
+}
+
+.dc-member:hover .dc-avatar { border-color: var(--red); }
+
+.dc-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.dc-ingame {
+  font-family: 'Cinzel', serif;
+  font-size: 0.78rem;
+  letter-spacing: 1px;
+  color: var(--text-2);
+  line-height: 1.2;
+}
+
+.dc-tag {
+  font-size: 0.65rem;
+  color: var(--text-m);
+  letter-spacing: 0.5px;
+}
+
 /* ─── RULE BLOCKS ────────────────────────────────── */
 .rules-grid {
   display: grid;

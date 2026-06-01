@@ -212,8 +212,20 @@
           <div class="rank-members">
             <div class="rank-members-label">Aktive Mitglieder</div>
             <ul class="rank-member-list">
-              <li>Dodo Rothosen</li>
-              <li>Nils</li>
+              <li class="dc-member">
+                <img class="dc-avatar" src="https://dcdn.dstn.to/avatars/1366803475954012200" alt="Avatar" onerror="this.src='img/logo.png'">
+                <div class="dc-info">
+                  <span class="dc-ingame">Dodo Rothosen</span>
+                  <span class="dc-tag" data-discord="1366803475954012200">...</span>
+                </div>
+              </li>
+              <li class="dc-member">
+                <img class="dc-avatar" src="https://dcdn.dstn.to/avatars/1113333465455263745" alt="Avatar" onerror="this.src='img/logo.png'">
+                <div class="dc-info">
+                  <span class="dc-ingame">Nils</span>
+                  <span class="dc-tag" data-discord="1113333465455263745">...</span>
+                </div>
+              </li>
             </ul>
           </div>
         </div>
@@ -231,8 +243,20 @@
           <div class="rank-members">
             <div class="rank-members-label">Aktive Mitglieder</div>
             <ul class="rank-member-list">
-              <li>Tuco Rothosen</li>
-              <li>Arne Geier</li>
+              <li class="dc-member">
+                <img class="dc-avatar" src="https://dcdn.dstn.to/avatars/917051907187548200" alt="Avatar" onerror="this.src='img/logo.png'">
+                <div class="dc-info">
+                  <span class="dc-ingame">Tuco Rothosen</span>
+                  <span class="dc-tag" data-discord="917051907187548200">...</span>
+                </div>
+              </li>
+              <li class="dc-member">
+                <img class="dc-avatar" src="https://dcdn.dstn.to/avatars/1270487578763853949" alt="Avatar" onerror="this.src='img/logo.png'">
+                <div class="dc-info">
+                  <span class="dc-ingame">Arne Geier</span>
+                  <span class="dc-tag" data-discord="1270487578763853949">...</span>
+                </div>
+              </li>
             </ul>
           </div>
         </div>
@@ -265,6 +289,19 @@
     const l = document.getElementById('navLinks');
     t.addEventListener('click', () => l.classList.toggle('open'));
     l.querySelectorAll('a').forEach(a => a.addEventListener('click', () => l.classList.remove('open')));
+
+    // Discord username laden
+    document.querySelectorAll('[data-discord]').forEach(async el => {
+      const id = el.dataset.discord;
+      try {
+        const r = await fetch(`https://discord-lookup-api.vercel.app/v1/users/${id}`);
+        const d = await r.json();
+        const name = d.global_name || d.username;
+        el.textContent = name ? name : '';
+      } catch {
+        el.textContent = '';
+      }
+    });
   </script>
 </body>
 </html>
